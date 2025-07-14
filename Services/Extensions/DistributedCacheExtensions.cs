@@ -1,16 +1,11 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json;
 
-namespace RedisDemo.Extensions
+namespace Services.Extensions
 {
     public static class DistributedCacheExtensions
     {
-        public static async Task SetRecord<T>(this IDistributedCache cache ,
+        public static async Task SetRecordAsync<T>(this IDistributedCache cache ,
                                               string recordId ,
                                               T data ,
                                               TimeSpan? absoluteExpireTime = null ,
@@ -21,6 +16,22 @@ namespace RedisDemo.Extensions
                 AbsoluteExpiration = DateTime.Now.Add(absoluteExpireTime ?? TimeSpan.FromSeconds(60)) ,
                 SlidingExpiration = unusedExpiredTime
             };
+
+            var jsonData = JsonSerializer.Serialize(data);
+
+            await cache.SetStringAsync(recordId , jsonData , cacheOptions);
+        }
+
+        public static async Task<T> GetRecoredAsync<T>(this IDistributedCache cache , string recordId)
+        {
+            var jsonData = await cache.GetStringAsync(recordId);
+            if (jsonData is null)
+            {
+                return default;
+            }
+
+            T value = JsonSerializer.Deserialize<T>(jsonData);
+            return value;
         }
     }
 }
