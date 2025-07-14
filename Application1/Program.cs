@@ -1,9 +1,8 @@
-﻿using Application1;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 
-namespace RedisDemo
+namespace Application1
 {
     internal class Program
     {
@@ -19,6 +18,7 @@ namespace RedisDemo
             var configuration = LoadConfiguration();
 
             IServiceCollection services = new ServiceCollection();
+            services.AddScoped<App>();
 
             services.AddStackExchangeRedisCache(options =>
             {

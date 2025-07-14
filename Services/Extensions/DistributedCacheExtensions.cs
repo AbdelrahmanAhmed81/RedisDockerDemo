@@ -13,7 +13,7 @@ namespace Services.Extensions
         {
             var cacheOptions = new DistributedCacheEntryOptions()
             {
-                AbsoluteExpiration = DateTime.Now.Add(absoluteExpireTime ?? TimeSpan.FromSeconds(60)) ,
+                AbsoluteExpiration = DateTime.Now.Add(absoluteExpireTime ?? TimeSpan.FromSeconds(30)) ,
                 SlidingExpiration = unusedExpiredTime
             };
 
