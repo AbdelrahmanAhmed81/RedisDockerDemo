@@ -22,7 +22,7 @@ namespace Application1
                 TimeStamp = DateTime.Now
             };
             Console.WriteLine("Application1: Setting cache data");
-            await _distributedCache.SetRecordAsync("Application1Data" , data);
+            await _distributedCache.SetRecordAsync("Application1Data" , data , TimeSpan.FromMinutes(5));
             Console.WriteLine("Application1: Cache data set");
 
             Console.ReadKey();
