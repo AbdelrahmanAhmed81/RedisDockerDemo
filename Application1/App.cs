@@ -14,6 +14,7 @@ namespace Application1
         }
         public async Task RunAsync(string[] args)
         {
+            Console.WriteLine("Application1: Setting cache data...");
             var data = new DataModel
             {
                 Id = 1 ,
@@ -21,11 +22,8 @@ namespace Application1
                 Description = "This is a sample application using Redis Cache" ,
                 TimeStamp = DateTime.Now
             };
-            Console.WriteLine("Application1: Setting cache data");
             await _distributedCache.SetRecordAsync("Application1Data" , data , TimeSpan.FromMinutes(5));
-            Console.WriteLine("Application1: Cache data set");
-
-            Console.ReadKey();
+            Console.WriteLine("Application1: Cache data set successfully");
         }
     }
 }

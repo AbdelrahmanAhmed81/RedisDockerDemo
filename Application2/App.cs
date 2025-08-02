@@ -14,15 +14,10 @@ namespace Application2
         }
         public async Task RunAsync(string[] args)
         {
-            Console.WriteLine("Application2: Waiting for data to be set...");
-            Thread.Sleep(5000); // Simulate some delay to ensure Application1 has set the data
-
-            Console.WriteLine("Application2: Reading cache data");
+            Console.WriteLine("Application2: Reading cache data...");
             var data = await _distributedCache.GetRecoredAsync<DataModel>("Application1Data");
 
             Console.WriteLine(data is null ? "empty cache" : data.ToString());
-
-            Console.ReadKey();
         }
     }
 }
